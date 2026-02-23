@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    [MyBatis Mapper XML]
+
+    namespace: DAOImpl에서 사용하는 NAMESPACE와 정확히 일치해야 합니다.
+    sqlSession.selectList("com.example.egov.board.mapper.BoardMapper.selectBoardList", vo)
+                          ↑ namespace                              ↑ id
+
+    [파라미터 표기법]
+    #{boardNo}   → PreparedStatement의 ? 치환 (SQL Injection 방지) ← 반드시 사용
+    ${boardNo}   → 문자열 직접 치환 (SQL Injection 위험, 컬럼명 동적 변경 시에만 사용)
+
+    [resultType vs resultMap]
+    resultType="boardVO" → typeAlias로 등록된 VO로 자동 매핑 (컬럼명 = 필드명 일치 필요)
+    resultMap           → 컬럼명과 필드명이 다를 때 수동 매핑
+-->
+<mapper namespace="com.example.egov.board.mapper.BoardMapper">
+
+    <!-- =====================================================
+         게시글 목록 조회 (페이징 + 검색)
+         ===================================================== -->
+    <select id="selectBoardList" parameterType="boardVO" resultType="boardVO">
+        SELECT
+            board_no    AS boardNo,
+            board_title AS boardTitle,
+            board_writer AS boardWriter,
+            board_hit   AS boardHit,
+            board_regdate AS boardRegdate
+        FROM tb_board
+        <where>
+            <!-- 동적 SQL: 검색 조건이 있을 때만 WHERE절 추가 -->
+            <if test="searchCondition == 'title'">
+                AND board_title LIKE '%' || #{searchKeyword} || '%'
+            </if>
+            <if test="searchCondition == 'content'">
+                AND board_content LIKE '%' || #{searchKeyword} || '%'
+            </if>
+            <if test="searchCondition == 'writer'">
+                AND board_writer LIKE '%' || #{searchKeyword} || '%'
+            </if>
+        </where>
+        ORDER BY board_no DESC
+        LIMIT #{pageUnit} OFFSET #{firstIndex}
+    </select>
+
+    <!-- =====================================================
+         게시글 총 건수 (페이징 계산용)
+         ===================================================== -->
+    <select id="selectBoardTotalCount" parameterType="boardVO" resultType="int">
+        SELECT COUNT(*)
+        FROM tb_board
+        <where>
+            <if test="searchCondition == 'title'">
+                AND board_title LIKE '%' || #{searchKeyword} || '%'
+            </if>
+            <if test="searchCondition == 'content'">
+                AND board_content LIKE '%' || #{searchKeyword} || '%'
+            </if>
+            <if test="searchCondition == 'writer'">
+                AND board_writer LIKE '%' || #{searchKeyword} || '%'
+            </if>
+        </where>
+    </select>
+
+    <!-- =====================================================
+         게시글 상세 조회
+         ===================================================== -->
+    <select id="selectBoard" parameterType="int" resultType="boardVO">
+        SELECT
+            board_no      AS boardNo,
+            board_title   AS boardTitle,
+            board_content AS boardContent,
+            board_writer  AS boardWriter,
+            board_hit     AS boardHit,
+            board_regdate AS boardRegdate
+        FROM tb_board
+        WHERE board_no = #{boardNo}
+    </select>
+
+    <!-- =====================================================
+         게시글 등록
+         ===================================================== -->
+    <insert id="insertBoard" parameterType="boardVO">
+        INSERT INTO tb_board (
+            board_title,
+            board_content,
+            board_writer,
+            board_hit,
+            board_regdate
+        ) VALUES (
+            #{boardTitle},
+            #{boardContent},
+            #{boardWriter},
+            0,
+            NOW()
+        )
+    </insert>
+
+    <!-- =====================================================
+         게시글 수정
+         ===================================================== -->
+    <update id="updateBoard" parameterType="boardVO">
+        UPDATE tb_board
+        SET
+            board_title   = #{boardTitle},
+            board_content = #{boardContent},
+            board_writer  = #{boardWriter}
+        WHERE board_no = #{boardNo}
+    </update>
+
+    <!-- =====================================================
+         게시글 삭제
+         ===================================================== -->
+    <delete id="deleteBoard" parameterType="int">
+        DELETE FROM tb_board
+        WHERE board_no = #{boardNo}
+    </delete>
+
+    <!-- =====================================================
+         조회수 증가
+         ===================================================== -->
+    <update id="updateBoardHit" parameterType="int">
+        UPDATE tb_board
+        SET board_hit = board_hit + 1
+        WHERE board_no = #{boardNo}
+    </update>
+
+</mapper>

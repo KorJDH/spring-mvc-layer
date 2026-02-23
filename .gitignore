@@ -1,0 +1,68 @@
+# ===========================
+# Java / Maven
+# ===========================
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Maven wrapper
+.mvn/
+mvnw
+mvnw.cmd
+
+# ===========================
+# IDE
+# ===========================
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# ===========================
+# OS
+# ===========================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ===========================
+# Spring Boot
+# ===========================
+spring.log
+
+# ===========================
+# 학습 프로젝트 전용
+# ===========================
+
+# bkit 플러그인 캐시 (학습 내용 아님)
+.bkit/
+.claude/
+docs/03-analysis/
+docs/04-report/
+docs/.bkit-memory.json
+docs/.pdca-status.json
+
+# .github 내 임시 폴더
+.github/java-upgrade/
