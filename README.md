@@ -42,8 +42,8 @@ VO          ← 계층 사이에서 데이터를 담아 전달하는 상자
 ### 1. 프로젝트 받기
 
 ```bash
-git clone https://github.com/[계정명]/egov.git
-cd egov
+git clone https://github.com/[계정명]/spring-mvc-layer.git
+cd spring-mvc-layer
 ```
 
 ### 2. 실행
@@ -93,7 +93,7 @@ Started EgovApplication in 3.xxx seconds
 ## 프로젝트 구조
 
 ```
-egov/
+spring-mvc-layer/
 ├── pom.xml                              ← Maven 의존성 (라이브러리 목록)
 ├── docs/guide/                          ← 학습 가이드 (여기부터 읽으세요!)
 └── src/main/

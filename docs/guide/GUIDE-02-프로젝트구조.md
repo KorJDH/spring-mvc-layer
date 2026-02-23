@@ -16,7 +16,7 @@ IntelliJ IDEA에서 파일을 찾는 방법을 먼저 알아봅시다.
 IntelliJ 화면 왼쪽에 "Project" 패널이 있습니다.
 없다면: View → Tool Windows → Project (단축키: Alt+1 또는 Cmd+1)
 
-egov                          ← 최상위 프로젝트 폴더
+spring-mvc-layer                          ← 최상위 프로젝트 폴더
 └── src
     └── main
         ├── java
@@ -43,7 +43,7 @@ egov                          ← 최상위 프로젝트 폴더
 ## 1. 전체 폴더 구조
 
 ```
-egov/                               ← 프로젝트 최상위 폴더
+spring-mvc-layer/                               ← 프로젝트 최상위 폴더
 │
 ├── pom.xml                         ← "장바구니 목록". 필요한 라이브러리 명세
 │
@@ -132,7 +132,7 @@ egov/                               ← 프로젝트 최상위 폴더
 
 ### pom.xml — 장바구니 목록
 
-**IntelliJ에서 열기:** 프로젝트 최상위 `egov` 폴더 바로 아래에 있습니다.
+**IntelliJ에서 열기:** 프로젝트 최상위 `spring-mvc-layer` 폴더 바로 아래에 있습니다.
 
 ```xml
 <dependency>
@@ -152,7 +152,7 @@ egov/                               ← 프로젝트 최상위 폴더
 
 ### EgovApplication.java — 앱 시작 버튼
 
-**IntelliJ에서 열기:** `src/main/java/com/example/egov/EgovApplication.java`
+**IntelliJ에서 열기:** `src/main/java/com/example/egov/EgovApplication.java` (패키지명은 그대로 유지됩니다)
 
 ```java
 @SpringBootApplication          // "이 클래스에서 Spring Boot를 시작해"
